@@ -1,8 +1,8 @@
 import java.lang.Math;
 
-public class Calculator implements ICalculator {
+public abstract class Calculator implements ICalculator {
     // Additional functions
-    public static int toDecimal(String binary){
+    public static int binaryToDecimal(String binary){
         int sum = 0;
         int a = binary.length()-1;
         for(int i = 0; i < binary.length(); i++){
@@ -68,7 +68,7 @@ public class Calculator implements ICalculator {
 
     public static String toHex(String binary) {
         // Turn binary number into decimal
-        int decimal = Integer.parseInt(binary, 2);
+        int decimal = Calculator.binaryToDecimal(binary);
         String hexNum = "";
         if (decimal == 10){
             return "A";
@@ -114,16 +114,37 @@ public class Calculator implements ICalculator {
     }
 
     public static String fromHex(String hex) {
-        int decimal = Integer.parseInt(hex, 16);
+        //
+        int sum = 0;
+        int a = hex.length()-1;
+        for(int i = 0; i < hex.length(); i++){
+            int number = 0;
+            if (Character.toString(hex.charAt(a)) == "A"){
+                number = 10;
+            }else if (Character.toString(hex.charAt(a)) == "B"){
+                number = 11;
+            }else if (Character.toString(hex.charAt(a)) == "C"){
+                number = 12;
+            }else if (Character.toString(hex.charAt(a)) == "D"){
+                number = 13;
+            }else if (Character.toString(hex.charAt(a)) == "E"){
+                number = 14;
+            }else if (Character.toString(hex.charAt(a)) == "F"){
+                number = 15;
+            }else{
+                number = Integer.parseInt(String.valueOf(hex.charAt(a)));
+            }
+            sum += (number*(Math.pow(16,i)));
+            a--;
+        }
+        int decimal = sum;
         String binary = "";
-
-        //Decimal to Binary
+        // Decimal to Binary
         while(decimal != 0){
             int rest = decimal % 2;
             decimal = (int) Math.floor(decimal / 2);
             binary = rest + binary;
         }
-
         return binary;
     }
 }

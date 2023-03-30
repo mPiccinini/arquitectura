@@ -1,4 +1,4 @@
 public interface IAsciiEncoder {
-    String encode(String binary);
+    static String encode(String binary){return null;};
     static String decode(String ascii){return null;};
 }

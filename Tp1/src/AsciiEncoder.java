@@ -1,7 +1,17 @@
-public class AsciiEncoder implements IAsciiEncoder{
+import java.util.ArrayList;
 
-    public String encode(String binary){
-        return null;
+public class AsciiEncoder implements IAsciiEncoder{
+    public static String encode(String binary){
+        String ascii = "";
+        String[] binaryArray = binary.split(" ");
+
+        for (String characterByte : binaryArray) {
+            int decimal = Calculator.binaryToDecimal(characterByte);
+            char character = (char) decimal;
+            ascii += character;
+        }
+
+        return ascii;
     }
 
     public static String decode(String ascii){
@@ -12,7 +22,7 @@ public class AsciiEncoder implements IAsciiEncoder{
 
             for (int j = 7; j >= 0; j--) {
                 int bit = (character >> j) & 1; // obtiene el valor del bit en la posición i
-                binary.append(bit); // agrega el valor del bit al StringBuilder
+                binary.append(bit);
             }
             binary.append(" ");
         }
