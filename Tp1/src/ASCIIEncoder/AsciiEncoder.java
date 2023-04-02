@@ -1,12 +1,23 @@
-import java.util.ArrayList;
+package ASCIIEncoder;
 
-public class AsciiEncoder implements IAsciiEncoder{
+public class AsciiEncoder implements IAsciiEncoder {
+    public static int binaryToDecimal(String binary){
+        int sum = 0;
+        int a = binary.length()-1;
+        for(int i = 0; i < binary.length(); i++){
+            int number = Integer.parseInt(String.valueOf(binary.charAt(a)));
+            sum += (number*(Math.pow(2,i)));
+            a--;
+        }
+        return sum;
+    }
+
     public static String encode(String binary){
         String ascii = "";
         String[] binaryArray = binary.split(" ");
 
         for (String characterByte : binaryArray) {
-            int decimal = Calculator.binaryToDecimal(characterByte);
+            int decimal = binaryToDecimal(characterByte);
             char character = (char) decimal;
             ascii += character;
         }

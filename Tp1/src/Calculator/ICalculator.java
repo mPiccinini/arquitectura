@@ -1,9 +1,13 @@
-public interface ICalculator {
+package Calculator;
+
+public interface ICalculator { // Los metodos son static para poder testearlos con el main
     // Operations:
     public static String sum(String a, String b){
         return null;
     };
-    public String sub(String a, String b);
+    public static String sub(String a, String b) {
+        return null;
+    };
     public String mult(String a, String b);
     public String div(String a, String b);
 

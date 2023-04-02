@@ -1,7 +1,8 @@
+package Calculator;
+
 import java.lang.Math;
 
-public abstract class Calculator implements ICalculator {
-    // Additional functions
+public class Calculator implements ICalculator {
     public static int binaryToDecimal(String binary){
         int sum = 0;
         int a = binary.length()-1;
@@ -50,22 +51,6 @@ public abstract class Calculator implements ICalculator {
         }
         return result;
     }
-
-    @Override
-    public String sub(String a, String b) {
-        return null;
-    }
-
-    @Override
-    public String mult(String a, String b) {
-        return null;
-    }
-
-    @Override
-    public String div(String a, String b) {
-        return null;
-    }
-
     public static String toHex(String binary) {
         // Turn binary number into decimal
         int decimal = Calculator.binaryToDecimal(binary);
@@ -85,8 +70,6 @@ public abstract class Calculator implements ICalculator {
         } else if (decimal < 16) {
             return Integer.toString(decimal);
         }
-        // Declare variables to be used
-        int i = 0;
         // Turn from decimal number to Hexadecimal by using division method
         while(decimal != 0){
             int rest = decimal % 16;
@@ -112,24 +95,23 @@ public abstract class Calculator implements ICalculator {
         }
         return hexNum;
     }
-
     public static String fromHex(String hex) {
         //
         int sum = 0;
         int a = hex.length()-1;
         for(int i = 0; i < hex.length(); i++){
             int number = 0;
-            if (Character.toString(hex.charAt(a)) == "A"){
+            if (hex.charAt(a) == 'A'){
                 number = 10;
-            }else if (Character.toString(hex.charAt(a)) == "B"){
+            }else if (hex.charAt(a) == 'B'){
                 number = 11;
-            }else if (Character.toString(hex.charAt(a)) == "C"){
+            }else if (hex.charAt(a) == 'C'){
                 number = 12;
-            }else if (Character.toString(hex.charAt(a)) == "D"){
+            }else if (hex.charAt(a) == 'D'){
                 number = 13;
-            }else if (Character.toString(hex.charAt(a)) == "E"){
+            }else if (hex.charAt(a) == 'E'){
                 number = 14;
-            }else if (Character.toString(hex.charAt(a)) == "F"){
+            }else if (hex.charAt(a) == 'F'){
                 number = 15;
             }else{
                 number = Integer.parseInt(String.valueOf(hex.charAt(a)));
@@ -146,5 +128,45 @@ public abstract class Calculator implements ICalculator {
             binary = rest + binary;
         }
         return binary;
+    }
+
+    public static String sub(String a, String b) {
+        // Make numbers be the same size
+        if (a.length() != b.length()){
+            int difference = a.length() - b.length();
+            while (difference != 0){
+                if (difference > 0){
+                    b = "0" + b;
+                } else{
+                    a = "0" + a;
+                }
+                difference = a.length() - b.length();
+            }
+        }
+        // Complemento a la base
+        char[] bArray = b.toCharArray();
+        for(int i = 0; i < bArray.length; i++) {
+            if(bArray[i] == '0') {
+                bArray[i] = '1';
+            } else {
+                bArray[i] = '0';
+            }
+        }
+        String comp = new String(bArray);
+        String compB = Calculator.sum(comp, "1");
+        String aMinusB = Calculator.sum(a, compB);
+        if(aMinusB.length() > a.length() && aMinusB.charAt(0) == '1'){
+            return aMinusB.substring(1);
+        }
+        return aMinusB;
+    }
+
+    @Override
+    public String mult(String a, String b) {
+        return null;
+    }
+    @Override
+    public String div(String a, String b) {
+        return null;
     }
 }
